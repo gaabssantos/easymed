@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\Models\Appointment;
 
 class User extends Authenticatable
 {
@@ -21,4 +22,8 @@ class User extends Authenticatable
     ];
 
     protected $table = "users";
+
+    public function appointments() {
+        return $this->belongsTo(Appointment::class, 'user_id', 'id');
+    }
 }

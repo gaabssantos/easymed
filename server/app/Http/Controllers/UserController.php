@@ -23,7 +23,7 @@ class UserController extends Controller
             'name' => 'required|string|min:5|max:255',
             'email' => 'required|email|unique:users,email',
             'genre' => 'required|string|max:1',
-            'role' => 'required|string',
+            'role' => 'required|integer',
             'password' => 'required|string|confirmed'
         ], $messages);
 

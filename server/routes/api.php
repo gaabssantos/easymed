@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['middleware' => ['auth:api']], function() {
+    Route::group(['prefix' => '/appointment'], function() {
+        Route::post('/create', [\App\Http\Controllers\AppointmentController::class, 'create']);
+    });
+});
+
 Route::group(['prefix' => '/user'], function() {
     Route::post('/create', [\App\Http\Controllers\UserController::class, 'register']);
     Route::post('/session', [\App\Http\Controllers\UserController::class, 'login']);
