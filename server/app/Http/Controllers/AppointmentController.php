@@ -9,6 +9,32 @@ use Auth;
 
 class AppointmentController extends Controller
 {
+    public function indexAllDoctorAppointments() {
+        $user = User::where('id', Auth::id())->first();
+
+        if ($user->role === 1) {
+            return response(['message' => 'Apenas especialistas podem ver todas as consultas.']);
+        }
+
+        return Appointment::all()->where('doctor', null);
+    }
+
+    public function indexAllPatientAppointments() {
+        $user = User::where('id', Auth::id())->first();
+
+        return Appointment::all()->where('user_id', $user->id);
+    }
+
+    public function updateDoctor(Request $request, $id) {
+        $user = User::where('id', Auth::id())->first();
+
+        if ($user->role === 1) {
+            return response(['message' => 'Apenas especialistas podem pegar consultas.']);
+        }
+
+        return Appointment::where('id', $id)->update(['doctor' => $user->name]);
+    }
+
     public function create(Request $request) {
         $message = [
             'description.required' => 'É necessário descrever a sua consulta.',
@@ -29,21 +55,5 @@ class AppointmentController extends Controller
         $validatedData['user_id'] = Auth::id();
 
         return Appointment::create($validatedData);
-    }
-
-    public function indexAllDoctorAppointments() {
-        $user = User::where('id', Auth::id())->first();
-
-        if ($user->role === 1) {
-            return response(['message' => 'Apenas especialistas podem ver todas as consultas.']);
-        }
-
-        return Appointment::all()->where('doctor', null);
-    }
-
-    public function indexAllPatientAppointments() {
-        $user = User::where('id', Auth::id())->first();
-
-        return Appointment::all()->where('user_id', $user->id);
     }
 }

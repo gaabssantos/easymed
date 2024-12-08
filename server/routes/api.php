@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth:api']], function() {
         Route::post('/create', [\App\Http\Controllers\AppointmentController::class, 'create']);
         Route::get('/doctor', [\App\Http\Controllers\AppointmentController::class, 'indexAllDoctorAppointments']);
         Route::get('/patient', [\App\Http\Controllers\AppointmentController::class, 'indexAllPatientAppointments']);
+        Route::put('/claim/{id}', [\App\Http\Controllers\AppointmentController::class, 'updateDoctor']);
     });
 });
 
