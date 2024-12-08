@@ -30,4 +30,14 @@ class AppointmentController extends Controller
 
         return Appointment::create($validatedData);
     }
+
+    public function indexAllDoctorAppointments() {
+        $user = User::where('id', Auth::id())->first();
+
+        if ($user->role === 1) {
+            return response(['message' => 'Apenas especialistas podem ver todas as consultas.']);
+        }
+
+        return Appointment::all()->where('doctor', null);
+    }
 }

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth:api']], function() {
     Route::group(['prefix' => '/appointment'], function() {
         Route::post('/create', [\App\Http\Controllers\AppointmentController::class, 'create']);
+        Route::get('/doctor', [\App\Http\Controllers\AppointmentController::class, 'indexAllDoctorAppointments']);
     });
 });
 
