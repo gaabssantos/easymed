@@ -31,4 +31,19 @@ class UserController extends Controller
 
         return User::create($validatedData);
     }
+
+    public function login(Request $request) {
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string'
+        ]);
+
+        if (!auth()->attempt($validatedData)) {
+            return response(['message' => 'Seu e-mail ou senha estão incorretos.'], 401);
+        }
+
+        $token = auth()->user()->createToken('authToken')->accessToken;
+
+        return response(['user' => auth()->user(), 'access_token' => $token]);
+    }
 }

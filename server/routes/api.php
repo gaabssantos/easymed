@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => '/user'], function() {
     Route::post('/create', [\App\Http\Controllers\UserController::class, 'register']);
+    Route::post('/session', [\App\Http\Controllers\UserController::class, 'login']);
 });
