@@ -40,4 +40,10 @@ class AppointmentController extends Controller
 
         return Appointment::all()->where('doctor', null);
     }
+
+    public function indexAllPatientAppointments() {
+        $user = User::where('id', Auth::id())->first();
+
+        return Appointment::all()->where('user_id', $user->id);
+    }
 }
